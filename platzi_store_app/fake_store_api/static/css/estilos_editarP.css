@@ -1,0 +1,102 @@
+
+        .edit-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            color: #10b981;
+        }
+
+        .edit-info p {
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .edit-info strong {
+            color: #e0e0e0;
+        }
+
+        .current-image-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .current-image-preview h4 {
+            color: #e0e0e0;
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+        }
+
+        .current-image-preview img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .current-image-preview img:hover {
+            transform: scale(1.05);
+        }
+
+        .notification {
+            position: relative;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .notification-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .notification-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+        }
+
+        .close-notification {
+            background: none;
+            border: none;
+            color: currentColor;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 1rem;
+        }
+
+        .close-notification:hover {
+            opacity: 0.7;
+        }
+
+        /* Mejorar la visibilidad de los campos prellenados */
+        input[type="text"]:not(:placeholder-shown),
+        input[type="number"]:not(:placeholder-shown),
+        textarea:not(:placeholder-shown),
+        select:not([value=""]) {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Animación para campos actualizados */
+        @keyframes fieldUpdated {
+            0% { background-color: rgba(16, 185, 129, 0.2); }
+            100% { background-color: rgba(16, 185, 129, 0.1); }
+        }
+
+        .field-updated {
+            animation: fieldUpdated 0.5s ease-out;
+        }

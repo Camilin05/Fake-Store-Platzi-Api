@@ -47,7 +47,7 @@ class AgregarProductoForm(forms.Form):
         min_value=0.01,
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
-            'placeholder': '0.00',
+            'placeholder': '0.00 $',
             'step': '0.01',
             'min': '0.01',
             'id': 'precio'

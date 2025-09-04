@@ -43,10 +43,57 @@ form::before {
 }
 
 /* Grupos de campos */
-.form-group {
+/* .form-group {
     margin-bottom: 1.2rem;
     position: relative;
 }
+/* Estilo para el contenedor de grupos de imágenes */
+.image-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre cada grupo de imagen */
+}
+
+/* Ajuste del form-group para las imágenes */
+.form-group {
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Espacio entre label e input+botón */
+}
+
+/* Ajuste del input-group para que el input y el botón estén juntos */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espacio entre input y botón */
+}
+
+.input-group input[type="url"] {
+    flex: 1; /* Permite que el input ocupe el espacio disponible */
+}
+/*.form-group1 {
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    text-align: center;
+}
+.input-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 0.5rem;
+}
+.form-group1 h3 {
+    text-align: left;
+}
+*/
+.form-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+    
 
 /* Labels */
 label {
@@ -147,7 +194,7 @@ button[type="submit"] {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
-    margin-top: 1.5rem;
+    
 }
 
 button[type="submit"]::before {

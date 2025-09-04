@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %} TIENDA AVILA'S - {{ es_edicion|yesno:"Editar,Agregar" }} Producto {% endblock %}
+
+{% block content %}
+    <main>
+        <h1>{{ es_edicion|yesno:"Editar,Agregar" }} Producto</h1>
+        
+        {% if es_edicion and producto_id %}
+            <div class="edit-info">
+                <p><strong>ID del Producto:</strong> #{{ producto_id }}</p>
+                {% if producto_data %}
+                    <p><strong>Producto Actual:</strong> {{ producto_data.title }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="progress-bar" style="width: 0%;"></div>
+        <p class="progress-text">0% Completado</p>
+
+        {% if messages %}
+            <div class="notifications">
+                {% for message in messages %}
+                    <div class="notification notification-{{ message.tags|default:'info' }}">
+                        {{ message }}
+                        <button class="close-notification">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'fake_store_api:editar_producto_api' %}">
+            {% csrf_token %}
+            
+            <!-- Campo oculto para el ID del producto en caso de edición -->
+            {% if es_edicion and producto_id %}
+                <input type="hidden" name="id" value="{{ producto_id }}">
+            {% endif %}
+            
+            <div class="form-group">
+                {{ form.titulo.label }}
+                {{ form.titulo }}
+                <span class="counter" id="titleCounter">0/100 caracteres</span>
+                {% if form.titulo.errors %}
+                    <p class="error-message">{{ form.titulo.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.precio.label }}
+                {{ form.precio }}
+                {% if form.precio.errors %}
+                    <p class="error-message">{{ form.precio.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.categoria.label }}
+                {{ form.categoria }}
+                {% if form.categoria.errors %}
+                    <p class="error-message">{{ form.categoria.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.descripcion.label }}
+                {{ form.descripcion }}
+                <span class="counter" id="descCounter">0/500 caracteres</span>
+                {% if form.descripcion.errors %}
+                    <p class="error-message">{{ form.descripcion.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group1">
+                <h3>Imagen del Producto</h3>
+                <div class="form-group">
+                    {{ form.imagen1.label }}
+                    <div class="input-group">
+                        {{ form.imagen1 }}
+                        <a href="#" class="btn btn-sm preview-btn">Vista Previa</a>
+                    </div>
+                    {% if form.imagen1.errors %}
+                        <p class="error-message">{{ form.imagen1.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Vista previa de la imagen actual si existe -->
+                {% if es_edicion and producto_data.images.0 %}
+                    <div class="current-image-preview">
+                        <h4>Imagen Actual:</h4>
+                        <img src="{{ producto_data.images.0 }}" alt="Imagen actual" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px;">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">
+                    {{ es_edicion|yesno:"Actualizar,Agregar" }} Producto
+                    <span class="btn-loading" style="display: none;">Procesando...</span>
+                </button>
+                <a href="{% url 'fake_store_api:obtener_productos' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <!-- Estilos adicionales para la página de edición -->
+    
+    <script>
+        // Código JavaScript específico para la página de edición
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar contadores al cargar la página
+            const titleInput = document.getElementById('titulo');
+            const titleCounter = document.getElementById('titleCounter');
+            const descInput = document.getElementById('descripcion');
+            const descCounter = document.getElementById('descCounter');
+
+            function updateTitleCounter() {
+                if (titleInput && titleCounter) {
+                    const len = titleInput.value.length;
+                    titleCounter.textContent = `${len}/100 caracteres`;
+                    titleCounter.className = len > 90 ? 'counter error' : len > 70 ? 'counter warning' : 'counter';
+                }
+            }
+
+            function updateDescCounter() {
+                if (descInput && descCounter) {
+                    const len = descInput.value.length;
+                    descCounter.textContent = `${len}/500 caracteres`;
+                    descCounter.className = len > 450 ? 'counter error' : len > 350 ? 'counter warning' : 'counter';
+                }
+            }
+
+            // Inicializar contadores
+            updateTitleCounter();
+            updateDescCounter();
+
+            // Agregar eventos
+            if (titleInput) titleInput.addEventListener('input', updateTitleCounter);
+            if (descInput) descInput.addEventListener('input', updateDescCounter);
+
+            // Hacer click en imagen actual para vista previa
+            const currentImage = document.querySelector('.current-image-preview img');
+            if (currentImage) {
+                currentImage.addEventListener('click', function() {
+                    openImageModal(this.src, 'Imagen Actual del Producto');
+                });
+            }
+
+            // Auto-cerrar notificaciones después de 10 segundos
+            const notifications = document.querySelectorAll('.notification');
+            notifications.forEach(notification => {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.style.opacity = '0';
+                        notification.style.transform = 'translateX(100%)';
+                        setTimeout(() => notification.remove(), 300);
+                    }
+                }, 10000);
+            });
+
+            // Resaltar campos que han sido prellenados
+            const prefilledFields = document.querySelectorAll('input:not([value=""]), textarea:not(:empty), select:not([value=""])');
+            prefilledFields.forEach(field => {
+                if (field.value && field.value.trim() !== '') {
+                    field.classList.add('field-updated');
+                }
+            });
+        });
+
+        // Función para cerrar notificaciones manualmente
+        function closeNotification(button) {
+            const notification = button.parentElement;
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => notification.remove(), 300);
+        }
+
+        // Agregar evento a todos los botones de cerrar
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('close-notification')) {
+                closeNotification(e.target);
+            }
+        });
+    </script>
+{% endblock %}

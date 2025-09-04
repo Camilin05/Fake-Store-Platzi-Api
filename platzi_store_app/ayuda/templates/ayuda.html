@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Ayuda - Tienda Avila's {% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Ayuda</h1>
+        
+
+        {% if messages %}
+            <div class="notifications">
+                {% for message in messages %}
+                    <div class="notification notification-error">
+                        {{ message }}
+                        <button class="close-notification">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="ayuda-container">
+            <div class="ayuda-content">
+                <h2>¿Qué es la Tienda Avila's?</h2>
+                <br></br>
+                <p>Esta tienda es una aplicación de ejemplo para el curso de <a href="https://www.udemy.com/course/django-para-desarrolladores-web-avanzado/" target="_blank">Django para desarrolladores web avanzado</a> Del SENA. Esta aplicación te permite explorar muchos productos variados.</p>
+                <p>La aplicación está hecha con Django, Bootstrap y JavaScript. La API de productos está hecha con Node.js y Express.</p>
+                <br></br>
+                <p>Si tienes alguna duda o necesitas ayuda, puedes contactarnos a través de <a href="https://www.linkedin.com/in/camiloavila/" target="_blank">LinkedIn</a> o <a href="https://twitter.com/CamiloAvilaDev" target="_blank">Twitter</a>.</p> 
+                <br></br>
+                <p>¡Gracias por usar la Tienda Avila's!</p>
+            </div>
+        </div>
+    </main>
+{% endblock %}
