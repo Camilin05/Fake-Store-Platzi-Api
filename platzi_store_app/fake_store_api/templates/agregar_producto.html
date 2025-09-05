@@ -44,16 +44,18 @@
             </div>
         {% endif %}
 
-        <form method="post" action="{% url 'fake_store_api:agregar_producto_api' %}">
+        <form class="forms" method="post" action="{% url 'fake_store_api:agregar_producto_api' %}">
             {% csrf_token %}
-            <div class="form-group">
-                {{ form.titulo.label }}
-                {{ form.titulo }}
-                <span class="counter" id="titleCounter">0/100 caracteres</span>
-                {% if form.titulo.errors %}
-                    <p class="error-message">{{ form.titulo.errors.0 }}</p>
-                {% endif %}
-            </div>
+                <div class="form-group">
+                    <div class="text-light">
+                    {{ form.titulo.label }}
+                    {{ form.titulo }}
+                    </div>
+                    <span class="counter" id="titleCounter">0/100 caracteres</span>
+                    {% if form.titulo.errors %}
+                        <p class="error-message">{{ form.titulo.errors.0 }}</p>
+                    {% endif %}
+                </div>
 
             <div class="form-group">
                     {{ form.precio.label }}
@@ -99,7 +101,7 @@
             <div class="form-actions">
                 <button type="submit">
                     Agregar Producto
-                    <span class="btn-loading" style="display: none;">Procesando...</span>
+                    <span class="btn-loading" style="display: none;"></span>
                 </button>
                 <a href="{% url 'fake_store_api:obtener_productos' %}" class="btn btn-secondary">Cancelar</a>
             </div>

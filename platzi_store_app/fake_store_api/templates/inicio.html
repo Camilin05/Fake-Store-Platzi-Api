@@ -1,12 +1,57 @@
 {% extends "base.html" %}
-{% block title %} Inicio - Tienda Avila's {% endblock%}
+{% load static %}
+{% block title %}  Inicio - Tienda Avila's {% endblock%}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Bienvenido a la Aplicación de Store Avila's</h1>
-        <img src="https://www.yunbitsoftware.com/blog/wp-content/uploads/2018/06/145416-OTSAQG-631-1.jpg" alt="Store Avila's" />
-        <p>Esta aplicación te permite explorar muchos productos variados.</p>
-    </div>        
+<div class="text-center">
+    <h1>Bienvenido a la Aplicación de Store Avila's</h1>
+    <p>Esta aplicación te permite explorar muchos productos variados.</p>
+    </div> 
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="{% static 'img/img.jpg' %}" class="d-block w-100" alt="Ficha ADSO sin uniforme">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/Champions.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/Principeee.jpg' %}" class="d-block w-100" alt="Principee">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/1.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/2.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/3.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/4.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/5.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/7.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/8.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'img/9.jpg' %}" class="d-block w-100" alt="Campeones del Interfichas">
+    </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+    </button>
+</div>       
     
     <section id="c_productos">
         <h2>Consultar Productos</h2>

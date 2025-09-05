@@ -85,26 +85,6 @@ class AgregarProductoForm(forms.Form):
         }),
         label='URL Imagen Principal'
     )
-    
-    imagen2 = forms.URLField(
-        required=False,
-        widget=forms.URLInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'https://ejemplo.com/imagen2.jpg (opcional)',
-            'id': 'imagen2'
-        }),
-        label='URL Imagen Secundaria'
-    )
-    
-    imagen3 = forms.URLField(
-        required=False,
-        widget=forms.URLInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'https://ejemplo.com/imagen3.jpg (opcional)',
-            'id': 'imagen3'
-        }),
-        label='URL Imagen Adicional'
-    )
 
     def clean_precio(self):
         precio = self.cleaned_data['precio']
@@ -126,13 +106,7 @@ class AgregarProductoForm(forms.Form):
             raise forms.ValidationError("La descripción debe tener al menos 10 caracteres")
         return descripcion
 
-    def clean_imagen1(self):
-        imagen = self.cleaned_data['imagen1']
-        # Validar que la URL termine en una extensión de imagen común
-        valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp')
-        if not any(imagen.lower().endswith(ext) for ext in valid_extensions):
-            raise forms.ValidationError("La URL debe apuntar a una imagen válida (.jpg, .png, .gif, etc.)")
-        return imagen
+    
 
     def get_images_list(self):
         """Retorna lista de imágenes no vacías"""
