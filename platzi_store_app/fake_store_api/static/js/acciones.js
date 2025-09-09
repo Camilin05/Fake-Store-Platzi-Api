@@ -327,45 +327,59 @@ function showNotification(message, type = 'info', duration = 5000) {
     }, duration);
 }
 
-// Animación de entrada para las tarjetas y funcionalidades de agregar producto
-document.addEventListener('DOMContentLoaded', function() {
-    // Para obtener_productos
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
+// Image previews - VERSIÓN CORREGIDA
+const previewBtns = document.querySelectorAll('.preview-btn');
+previewBtns.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log('Botón de vista previa clickeado');
+        
+        // Obtener el ID del input desde el atributo data-input
+        const inputId = btn.getAttribute('data-input') || 'imagen1';
+        const urlInput = document.getElementById(inputId);
+        
+        if (!urlInput) {
+            showNotification('Error: No se encontró el campo de URL', 'error');
+            return;
+        }
+        
+        const url = urlInput.value.trim();
+        
+        if (!url) {
+            showNotification('Ingresa una URL válida primero', 'error');
+            urlInput.focus();
+            return;
+        }
+        
+        // Validar que la URL tenga formato básico
+        try {
+            new URL(url);
+        } catch (e) {
+            showNotification('La URL no tiene un formato válido', 'error');
+            urlInput.focus();
+            return;
+        }
+        
+        // Mostrar indicador de carga
+        const originalText = btn.textContent;
+        btn.textContent = 'Validando...';
+        btn.disabled = true;
+        
+        // Validar que la URL sea una imagen válida
+        const img = new Image();
+        img.onload = () => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            openImageModal(url, 'Vista Previa de Imagen');
+        };
+        img.onerror = () => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            showNotification('La URL no corresponde a una imagen válida o no se puede cargar', 'error');
+        };
+        img.src = url;
     });
-
-    // Añadir eventos a los botones de acción con verificación de ID
-    document.querySelectorAll('.action-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const id = this.dataset.id;
-            const action = this.dataset.action;
-            
-            if (!id) {
-                showNotification('Error: ID del producto no encontrado', 'error');
-                return;
-            }
-            
-            console.log(`Ejecutando acción: ${action} para producto: ${id}`);
-            
-            switch(action) {
-                case 'view':
-                    viewProduct(id);
-                    break;
-                case 'edit':
-                    editProduct(id);
-                    break;
-                case 'delete':
-                    deleteProduct(id);
-                    break;
-                default:
-                    showNotification('Acción no reconocida', 'error');
-            }
-        });
-    });
+});
 
     // Para cerrar el modal de imagen
     const modalCloseBtn = document.querySelector('.modal-close');
@@ -453,10 +467,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Auto-cerrar notificaciones al hacer click
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('close-notification')) {
-            e.target.parentElement.remove();
-        }
-    });
+// Auto-cerrar notificaciones al hacer click
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('close-notification')) {
+        e.target.parentElement.remove();
+    }
 });

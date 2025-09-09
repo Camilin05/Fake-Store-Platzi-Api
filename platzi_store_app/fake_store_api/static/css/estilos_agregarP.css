@@ -29,7 +29,60 @@ main h1 {
     overflow: hidden;
     animation: slideInUp 0.5s ease-out;
 }
+image-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
 
+.image-modal .modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.image-modal .modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.image-modal .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 2001;
+}
+
+.image-modal .modal-close:hover {
+    color: #10b981;
+}
+
+.image-caption {
+    text-align: center;
+    color: #e0e0e0;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+}
 .forms::before {
     content: '';
     position: absolute;
@@ -41,12 +94,6 @@ main h1 {
     transition: all 0.3s ease;
 }
 
-/* Grupos de campos */
-/* .form-group {
-    margin-bottom: 1.2rem;
-    position: relative;
-}
-/* Estilo para el contenedor de grupos de imágenes */
 .image-group {
     display: flex;
     flex-direction: column;
@@ -91,7 +138,66 @@ main h1 {
     display: flex;
     gap: 1rem;
 }
+select {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    /* Importante para el dropdown */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
 
+/* Estilos específicos para las opciones del dropdown */
+select option {
+    background: #1a1a1a !important; /* Fondo oscuro */
+    color: #e0e0e0 !important; /* Texto claro */
+    padding: 0.5rem;
+    border: none;
+}
+
+/* Alternativa: opciones con fondo más oscuro */
+select option:nth-child(even) {
+    background: #0c0c0c !important;
+}
+
+/* Para cuando una opción está seleccionada */
+select option:checked {
+    background: rgba(16, 185, 129, 0.3) !important;
+    color: #10b981 !important;
+}
+
+/* Para el hover en las opciones (funciona en algunos navegadores) */
+select option:hover {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #e0e0e0 !important;
+}
+
+/* Agregar una flecha personalizada al select */
+select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 3rem;
+}
+
+/* Estados de focus para el select */
+select:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.08);
+    box-shadow: 
+        0 0 0 3px rgba(16, 185, 129, 0.15),
+        0 3px 12px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
+}
     
 
 /* Labels */

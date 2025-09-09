@@ -47,10 +47,10 @@
         <form class="forms" method="post" action="{% url 'fake_store_api:agregar_producto_api' %}">
             {% csrf_token %}
                 <div class="form-group">
-                    <div class="text-light">
+                    
                     {{ form.titulo.label }}
                     {{ form.titulo }}
-                    </div>
+                    
                     <span class="counter" id="titleCounter">0/100 caracteres</span>
                     {% if form.titulo.errors %}
                         <p class="error-message">{{ form.titulo.errors.0 }}</p>
@@ -89,7 +89,7 @@
                     {{ form.imagen1.label }}
                     <div class="input-group">
                         {{ form.imagen1 }}
-                        <a href="#" class="btn btn-sm preview-btn">Vista Previa</a>
+                        <button type="button" class="btn btn-sm preview-btn" data-input="imagen1">Vista Previa</button>
                     </div>
                     {% if form.imagen1.errors %}
                         <p class="error-message">{{ form.imagen1.errors.0 }}</p>
@@ -97,7 +97,13 @@
                 </div>
                 
             </div>
-
+            <div id="imageModal" class="image-modal" style="display: none;">
+                <div class="modal-content">
+                    <button class="modal-close" onclick="closeImageModal()">&times;</button>
+                        <img id="modalImage" src="" alt="Vista previa" style="max-width: 100%; max-height: 80vh; object-fit: contain;">
+                    <div id="imageCaption" class="image-caption"></div>
+                </div>
+            </div>
             <div class="form-actions">
                 <button type="submit">
                     Agregar Producto
