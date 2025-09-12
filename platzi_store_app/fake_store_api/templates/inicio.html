@@ -3,12 +3,21 @@
 {% block title %}  Inicio - Tienda Avila's {% endblock%}
 
 {% block content %}
+
 <div class="text-center">
     <h1>Bienvenido a la Aplicación de Store Avila's</h1>
     <p>Esta aplicación te permite explorar muchos productos variados.</p>
-    </div> 
-    <div id="carouselExample" class="carousel slide">
-        <div class="carousel-inner">
+</div> 
+
+
+<div id="auth-content-error" class="alert alert-danger" style="display: none;">
+    <strong>Error:</strong> No tienes acceso a esta página.
+</div>
+
+
+<div id="carouselExample" class="carousel slide">
+    <!-- ... tu carrusel se mantiene igual ... -->
+    <div class="carousel-inner">
     <div class="carousel-item active">
         <img src="{% static 'img/img.jpg' %}" class="d-block w-100" alt="Ficha ADSO sin uniforme">
     </div>
@@ -52,22 +61,4 @@
     <span class="visually-hidden">Next</span>
     </button>
 </div>       
-    
-    <section id="c_productos">
-        <h2>Consultar Productos</h2>
-        <p>Explora nuestro catálogo de productos disponibles</p>
-        <br></br>
-        <a href="{% url 'fake_store_api:obtener_productos' %}" class="btn btn-primary">
-            Consultar Productos
-        </a>
-    </section>
-    
-    <section id="a_productos">
-        <h2>Agregar Productos</h2>
-        <p>Añade nuevos productos a nuestro catálogo</p>
-        <br></br>
-        <a href="{% url 'fake_store_api:agregar_producto' %}" class="btn btn-info">
-            Agregar Productos
-        </a>
-    </section>
 {% endblock %}

@@ -1,184 +1,79 @@
-
 {% extends 'base.html' %}
 
 {% block title %} TIENDA AVILA'S - Productos {% endblock %}
 
 {% block content %}
 <div class="products-container">
+    <!-- Header de la página -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1><i class="fas fa-store"></i> Catálogo de Productos</h1>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'fake_store_api:agregar_producto' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Agregar Producto
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes de Django -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification notification-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     {% if success %}
-        <!-- Header de la página -->
-        <div class="page-header">
-            <div class="header-content">
-                <div class="title-section">
-                    <h1>
-                        <i class="fas fa-store"></i>
-                        Catálogo de Productos
-                    </h1>
-                    <p class="page-subtitle">{{ consulta }}</p>
-                </div>
-                <div class="header-actions">
-                    <a href="{% url 'fake_store_api:agregar_producto' %}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i>
-                        Agregar Producto
-                    </a>
-                    <button onclick="refreshProducts()" class="btn btn-secondary">
-                        <i class="fas fa-sync-alt"></i>
-                        Actualizar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Resumen de resultados -->
-        <div class="results-summary">
-            <div class="summary-card">
-                <div class="summary-icon">
-                    <i class="fas fa-box-open"></i>
-                </div>
-                <div class="summary-content">
-                    <h3>{{ total_mostrados }} productos encontrados</h3>
-                    <div class="summary-details">
-                        <div class="detail-item">
-                            <i class="fas fa-tags"></i>
-                            <span>{{ categorias|length }} categorías disponibles</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Actualizado recientemente</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección de filtros -->
-        <div class="filters-section">
-            <div class="filters-container">
-                <div class="filter-group">
-                    <label for="categoryFilter">Filtrar por categoría:</label>
-                    <select id="categoryFilter" onchange="filterProducts()">
-                        <option value="">Todas las categorías</option>
-                        {% for categoria in categorias %}
-                            <option value="{{ categoria.name }}">{{ categoria.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="search-box">
-                    <label for="searchInput">Buscar productos:</label>
-                    <input type="text" id="searchInput" placeholder="Buscar por nombre..." onkeyup="searchProducts()">
-                    
-                </div>
-                
-                <div class="filter-group">
-                    <label for="sortFilter">Ordenar por:</label>
-                    <select id="sortFilter" onchange="sortProducts()">
-                        <option value="">Orden original</option>
-                        <option value="title">Nombre A-Z</option>
-                        <option value="price-low">Precio: Menor a Mayor</option>
-                        <option value="price-high">Precio: Mayor a Menor</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
         <!-- Grid de productos -->
         <div class="products-grid" id="productsGrid">
             {% for producto in productos %}
-                <div class="product-card" 
-                        data-id="{{ producto.id }}" 
-                        data-title="{{ producto.title|lower }}" 
-                        data-price="{{ producto.price }}" 
-                        data-category="{{ producto.category.name|default:'Sin categoría' }}"
-                        data-category-id="{{ producto.category.id|default:'' }}">
+                <div class="product-card" data-id="{{ producto.id }}">
                     
                     <div class="card-header">
                         <div class="product-id">#{{ producto.id }}</div>
                         <div class="card-actions">
-                            <button class="action-btn" data-action="edit" data-id="{{ producto.id }}" title="Editar">
+                            <!-- BOTÓN DE EDITAR CORREGIDO -->
+                            <a href="{% url 'fake_store_api:editar_producto' producto.id %}" class="action-btn edit-btn" title="Editar">
                                 <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="action-btn" data-action="delete" data-id="{{ producto.id }}" title="Eliminar">
+                            </a>
+                            <button class="action-btn delete-btn" onclick="deleteProduct({{ producto.id }}, this)" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
 
                     <div class="card-image-container">
-                        {% if producto.images and producto.images.0 %}
-                            <img src="{{ producto.images.0 }}" 
-                                    alt="{{ producto.title }}" 
-                                    class="card-image"
-                                    onclick="openImageModal('{{ producto.images.0 }}', '{{ producto.title }}')">
+                        {% if producto.images.0 %}
+                            <img src="{{ producto.images.0 }}" alt="{{ producto.title }}" class="card-image">
                         {% else %}
-                            <div class="no-image">
-                                <i class="fas fa-image"></i>
-                                <span>Sin imagen</span>
-                            </div>
+                                <img src="https://placehold.co/600x400/222/fff?text=Sin+Imagen" alt="Sin imagen" class="card-image">
                         {% endif %}
-                        
-                        <div class="image-overlay">
-                            <button class="overlay-btn" onclick="openImageModal('{{ producto.images.0|default:'/static/images/no-image.png' }}', '{{ producto.title }}')">
-                                
-                            </button>
-                        </div>
                     </div>
 
                     <div class="card-content">
                         <div class="product-category">{{ producto.category.name|default:'Sin categoría' }}</div>
                         <h3 class="product-title">{{ producto.title }}</h3>
                         <p class="product-description">{{ producto.description|truncatewords:15 }}</p>
-                        
                         <div class="product-footer">
                             <div class="price-container">
                                 <span class="price">${{ producto.price }}</span>
-                                <span class="price-label">USD</span>
                             </div>
-                            
-                            
                         </div>
                     </div>
-
-                    
                 </div>
             {% endfor %}
         </div>
-
-        <!-- Información de paginación -->
-        <div class="pagination-container">
-            <div class="pagination-info">
-                Mostrando {{ total_mostrados }} productos en total
-            </div>
-        </div>
-
     {% else %}
         <!-- Estado de error -->
         <div class="empty-state">
-            <div class="empty-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <h2>Error al cargar productos</h2>
-            <p>{{ error_message }}</p>
-            <div class="empty-actions">
-                <button onclick="refreshProducts()" class="btn btn-primary">
-                    <i class="fas fa-sync-alt"></i>
-                    Reintentar
-                </button>
-                <a href="{% url 'fake_store_api:agregar_producto' %}" class="btn btn-secondary">
-                    <i class="fas fa-plus"></i>
-                    Agregar Producto
-                </a>
-            </div>
+            <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h2>Error al Cargar Productos</h2>
+            <p>{{ error_message|default:"No se pudo conectar con el servidor. Inténtalo de nuevo." }}</p>
         </div>
     {% endif %}
-</div>
-
-<!-- Modal para visualizar imágenes -->
-<div id="imageModal" class="image-modal" onclick="closeImageModal()">
-    <div class="modal-content-image" onclick="event.stopPropagation()">
-        <button class="modal-close" onclick="closeImageModal()">&times;</button>
-        <img id="modalImage" src="" alt="">
-        <div id="imageCaption" class="image-caption"></div>
-    </div>
 </div>
 {% endblock %}

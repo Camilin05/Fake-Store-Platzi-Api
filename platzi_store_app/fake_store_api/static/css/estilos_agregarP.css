@@ -14,6 +14,91 @@ main h1 {
     letter-spacing: 0.5px;
 }
 
+/* =====  BARRA DE PROGRESO VISUAL ===== */
+.progress-container {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    padding: 4px;
+    margin: 1.5rem 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 12px;
+    background: linear-gradient(45deg, #10b981, #34d399, #6ee7b7);
+    background-size: 200% 200%;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: gradientShift 3s ease-in-out infinite;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
+    border-radius: 10px;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Estados de la barra según el progreso */
+.progress-bar.low {
+    background: linear-gradient(45deg, #ef4444, #f87171, #fca5a5);
+}
+
+.progress-bar.medium {
+    background: linear-gradient(45deg, #f59e0b, #fbbf24, #fcd34d);
+}
+
+.progress-bar.high {
+    background: linear-gradient(45deg, #10b981, #34d399, #6ee7b7);
+}
+
+/* =====  FIN BARRA DE PROGRESO ===== */
+
 /* Contenedor del formulario */
 .forms {
     margin: 0 auto;
@@ -29,7 +114,20 @@ main h1 {
     overflow: hidden;
     animation: slideInUp 0.5s ease-out;
 }
-image-modal {
+
+.forms::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #10b981, transparent);
+    transition: all 0.3s ease;
+}
+
+/* Modal de imágenes */
+.image-modal {
     display: none;
     position: fixed;
     z-index: 2000;
@@ -71,6 +169,7 @@ image-modal {
     background: none;
     border: none;
     z-index: 2001;
+    transition: color 0.3s ease;
 }
 
 .image-modal .modal-close:hover {
@@ -83,122 +182,73 @@ image-modal {
     padding: 1rem 0;
     font-size: 1.1rem;
 }
-.forms::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #10b981, transparent);
-    transition: all 0.3s ease;
-}
 
-.image-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Espacio entre cada grupo de imagen */
-}
-
-/* Ajuste del form-group para las imágenes */
+/* Grupos de formulario */
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem; /* Espacio entre label e input+botón */
+    gap: 0.5rem;
 }
 
-/* Ajuste del input-group para que el input y el botón estén juntos */
+.form-group1 {
+    margin-bottom: 1.5rem;
+}
+
+.form-group1 h3 {
+    color: #e0e0e0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    text-align: left;
+}
+
 .input-group {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* Espacio entre input y botón */
+    gap: 0.75rem;
 }
 
 .input-group input[type="url"] {
-    flex: 1; /* Permite que el input ocupe el espacio disponible */
+    flex: 1;
 }
-/*.form-group1 {
-    gap: 1.5rem;
-    margin-bottom: 1.2rem;
-    position: relative;
-    text-align: center;
+
+/* Botón de vista previa mejorado */
+.preview-btn {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
 }
-.input-group {
-    margin-top: 20px;
-    display: flex;
-    gap: 0.5rem;
+
+.preview-btn:hover {
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
 }
-.form-group1 h3 {
-    text-align: left;
+
+.preview-btn:active {
+    transform: translateY(0);
 }
-*/
+
+.preview-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .form-actions {
     display: flex;
     gap: 1rem;
+    margin-top: 2rem;
 }
-select {
-    width: 100%;
-    padding: 0.9rem 1.2rem;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    color: #e0e0e0;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-    /* Importante para el dropdown */
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-/* Estilos específicos para las opciones del dropdown */
-select option {
-    background: #1a1a1a !important; /* Fondo oscuro */
-    color: #e0e0e0 !important; /* Texto claro */
-    padding: 0.5rem;
-    border: none;
-}
-
-/* Alternativa: opciones con fondo más oscuro */
-select option:nth-child(even) {
-    background: #0c0c0c !important;
-}
-
-/* Para cuando una opción está seleccionada */
-select option:checked {
-    background: rgba(16, 185, 129, 0.3) !important;
-    color: #10b981 !important;
-}
-
-/* Para el hover en las opciones (funciona en algunos navegadores) */
-select option:hover {
-    background: rgba(16, 185, 129, 0.2) !important;
-    color: #e0e0e0 !important;
-}
-
-/* Agregar una flecha personalizada al select */
-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.75rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
-    padding-right: 3rem;
-}
-
-/* Estados de focus para el select */
-select:focus {
-    outline: none;
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.08);
-    box-shadow: 
-        0 0 0 3px rgba(16, 185, 129, 0.15),
-        0 3px 12px rgba(16, 185, 129, 0.1);
-    transform: translateY(-1px);
-}
-    
 
 /* Labels */
 label {
@@ -214,6 +264,7 @@ label {
 
 /* Inputs y select */
 input[type="text"],
+input[type="url"],
 input[type="number"],
 select,
 textarea {
@@ -235,6 +286,7 @@ textarea {
 }
 
 input[type="text"]:focus,
+input[type="url"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
@@ -247,11 +299,54 @@ textarea:focus {
     transform: translateY(-1px);
 }
 
+input[type="text"]:hover,
+input[type="url"]:hover,
+input[type="number"]:hover,
+select:hover,
+textarea:hover {
+    border-color: rgba(16, 185, 129, 0.6);
+    transform: translateY(-1px);
+}
+
 input[type="text"]::placeholder,
+input[type="url"]::placeholder,
 input[type="number"]::placeholder,
 textarea::placeholder {
     color: #a0a0a0;
     opacity: 0.8;
+}
+
+/* Select mejorado */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 3rem;
+}
+
+select option {
+    background: #1a1a1a !important;
+    color: #e0e0e0 !important;
+    padding: 0.5rem;
+    border: none;
+}
+
+select option:nth-child(even) {
+    background: #0c0c0c !important;
+}
+
+select option:checked {
+    background: rgba(16, 185, 129, 0.3) !important;
+    color: #10b981 !important;
+}
+
+select option:hover {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #e0e0e0 !important;
 }
 
 /* Contadores de caracteres */
@@ -263,14 +358,21 @@ textarea::placeholder {
     font-size: 0.85rem;
     color: #10b981;
     transition: color 0.3s ease;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    margin-top: 15px;
 }
 
 .counter.warning {
     color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
 }
 
 .counter.error {
     color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
 }
 
 /* Mensajes de error */
@@ -278,8 +380,12 @@ textarea::placeholder {
     color: #ef4444;
     font-size: 0.85rem;
     margin-top: 0.3rem;
-    display: none;
+    display: block;
     transition: opacity 0.3s ease;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 0.5rem;
+    border-radius: 6px;
+    border-left: 3px solid #ef4444;
 }
 
 /* Botón de envío */
@@ -299,7 +405,6 @@ button[type="submit"] {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
-    
 }
 
 button[type="submit"]::before {
@@ -327,6 +432,34 @@ button[type="submit"]:active {
     transform: translateY(0);
 }
 
+button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Botón secundario */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 /* Efectos de validación */
 input:invalid,
 select:invalid,
@@ -339,18 +472,6 @@ input:valid,
 select:valid,
 textarea:valid {
     border-color: #10b981;
-}
-
-/* Animaciones */
-@keyframes slideInUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 /* Modal de éxito */
@@ -377,6 +498,7 @@ textarea:valid {
     width: 90%;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     animation: slideInUp 0.4s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .modal-content h2 {
@@ -390,24 +512,151 @@ textarea:valid {
     margin-bottom: 1.5rem;
 }
 
-.modal-content button {
+.modal-content button,
+.modal-content .btn {
     background: linear-gradient(45deg, #10b981, #34d399);
+    color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
     font-size: 0.95rem;
+    margin: 0.5rem;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Efecto de carga para el botón */
-button[type="submit"]:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+.modal-content button:hover,
+.modal-content .btn:hover {
+    background: linear-gradient(45deg, #059669, #10b981);
+    transform: translateY(-1px);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Product preview en modal */
+.product-preview {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.product-preview h3 {
+    color: #10b981;
+    margin-bottom: 0.5rem;
+}
+
+.product-preview img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.product-preview img:hover {
+    transform: scale(1.05);
+}
+
+/* Notificaciones mejoradas */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    z-index: 3000;
+    backdrop-filter: blur(10px);
+    border-left: 4px solid #10b981;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+}
+
+.notification-error {
+    border-left-color: #ef4444;
+}
+
+.notification-warning {
+    border-left-color: #f59e0b;
+}
+
+.notification-success {
+    border-left-color: #10b981;
+}
+
+.close-notification {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.close-notification:hover {
+    opacity: 1;
+}
+
+/* Estilo para el loading del botón */
+.btn-loading {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 0.5rem;
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    form {
+    .forms {
         padding: 1.5rem;
         margin: 0 0.8rem;
     }
@@ -416,7 +665,17 @@ button[type="submit"]:disabled {
         font-size: 1.8rem;
     }
 
+    .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .preview-btn {
+        margin-top: 0.5rem;
+    }
+
     input[type="text"],
+    input[type="url"],
     input[type="number"],
     select,
     textarea {
@@ -433,6 +692,20 @@ button[type="submit"]:disabled {
         padding: 1.5rem;
         max-width: 90%;
     }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .progress-container {
+        margin: 1rem 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -441,37 +714,18 @@ button[type="submit"]:disabled {
         margin-bottom: 1rem;
     }
 
-    form {
+    .forms {
         padding: 1.2rem;
     }
 
     label {
         font-size: 0.9rem;
     }
-}
 
-/* Efectos adicionales para mejor UX */
-input[type="text"]:hover,
-input[type="number"]:hover,
-select:hover,
-textarea:hover {
-    border-color: rgba(16, 185, 129, 0.6);
-    transform: translateY(-1px);
-}
-
-/* Estilo para el loading del botón */
-.btn-loading {
-    display: none;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
+    .counter {
+        position: static;
+        margin-top: 0.5rem;
+        transform: none;
+        display: inline-block;
     }
 }

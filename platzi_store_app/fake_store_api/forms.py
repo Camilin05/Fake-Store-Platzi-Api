@@ -79,7 +79,7 @@ class AgregarProductoForm(forms.Form):
     imagen1 = forms.URLField(
         required=True,
         widget=forms.URLInput(attrs={
-            'class': 'text-body-secondary',
+            'class': 'text-light',
             'placeholder': 'https://ejemplo.com/imagen1.jpg',
             'id': 'imagen1'
         }),

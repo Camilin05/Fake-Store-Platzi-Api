@@ -1,0 +1,78 @@
+/* Estilos para los botones y saludos de autenticación */
+
+/* Contenedor principal de los enlaces en la barra de navegación */
+.auth-links {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo general para los botones en la barra de navegación */
+.auth-button {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background-color: transparent;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.auth-button:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* Botón especial para registrarse */
+.auth-button.register {
+    border-color: #198754;
+    color: #198754;
+}
+
+.auth-button.register:hover {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* Botón para cerrar sesión */
+.auth-button.logout {
+    border-color: #dc3545;
+    color: #dc3545;
+    cursor: pointer; /* Para que parezca un botón */
+}
+
+.auth-button.logout:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Saludo al usuario */
+.user-greeting {
+    margin-right: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Contenedor de acciones en la página de inicio para invitados */
+.guest-actions {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.guest-actions .auth-button {
+    margin: 5px;
+}
+
+/* Contenedor de acciones en la página de inicio para usuarios logueados */
+.user-actions {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e9f5ff;
+    border-radius: 8px;
+    border: 1px solid #bde0fe;
+}
