@@ -57,10 +57,11 @@
         <div class="form-group">
             {{ form.imagen1.label_tag }}
             <div class="input-group">
-                {{ form.imagen1 }}
                 <button type="button" class="btn btn-sm preview-btn" data-input-id="{{ form.imagen1.id_for_label }}">
                     <i class="fas fa-eye"></i> Vista Previa
                 </button>
+                {{ form.imagen1 }}
+                
             </div>
             {% if form.imagen1.errors %}<p class="error-message">{{ form.imagen1.errors.0 }}</p>{% endif %}
         </div>

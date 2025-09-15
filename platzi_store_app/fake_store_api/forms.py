@@ -35,7 +35,7 @@ class AgregarProductoForm(forms.Form):
         max_length=100, 
         required=True,
         widget=forms.TextInput(attrs={
-            'class': 'text-light',
+            'class': 'text-dark',
             'placeholder': 'Ingresa el título del producto',
             'id': 'titulo'
         }),
@@ -46,7 +46,7 @@ class AgregarProductoForm(forms.Form):
         required=True,
         min_value=0.01,
         widget=forms.NumberInput(attrs={
-            'class': 'text-light',
+            'class': 'text-dark',
             'placeholder': '0.00 $',
             'step': '0.01',
             'min': '0.01',
@@ -59,7 +59,7 @@ class AgregarProductoForm(forms.Form):
         max_length=500, 
         required=True,
         widget=forms.Textarea(attrs={
-            'class': 'text-light',
+            'class': 'text-dark',
             'placeholder': 'Describe detalladamente el producto...',
             'rows': 4,
             'id': 'descripcion'
@@ -79,7 +79,7 @@ class AgregarProductoForm(forms.Form):
     imagen1 = forms.URLField(
         required=True,
         widget=forms.URLInput(attrs={
-            'class': 'text-light',
+            'class': 'text-dark',
             'placeholder': 'https://ejemplo.com/imagen1.jpg',
             'id': 'imagen1'
         }),
